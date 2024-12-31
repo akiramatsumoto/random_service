@@ -1,18 +1,22 @@
 #!/bin/bash
 
 cleanup () {
-    kill $NODE_PID
+    if ps -p $NODE_PID > /dev/null; then
+        kill $NODE_PID
+    else
+        echo "Process $NODE_PID not found, skipping kill"
+    fi
     exit 1
 }
 
-trap "kill $NODE_PID; exit" EXIT
+trap "cleanup" EXIT
 
 dir=~
 [ "$1" != "" ] && dir="$1"
 
 cd $dir/ros2_ws
 colcon build
-source $dir/.bashrc
+source install/setup.bash  # ROS 2 ワークスペースのセットアップ
 
 # サービスの立ち上げ
 ros2 run random_service random_generator &
