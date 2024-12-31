@@ -16,7 +16,7 @@ dir=~
 
 cd $dir/ros2_ws
 colcon build
-source install/setup.bash  # ROS 2 ワークスペースのセットアップ
+source $dir/.bashrc
 
 # サービスの立ち上げ
 ros2 run random_service random_generator &
