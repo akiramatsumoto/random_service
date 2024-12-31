@@ -21,10 +21,9 @@ ament_target_dependencies(random_generator
   rclcpp
 )
 
-# Link the generated interfaces to the executable
-rosidl_target_interfaces(random_generator
-  ${PROJECT_NAME} "rosidl_typesupport_cpp"
-)
+# Use recommended way to link generated interfaces
+rosidl_get_typesupport_target(typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
+target_link_libraries(random_generator ${typesupport_target})
 
 # Install the executable
 install(TARGETS random_generator
