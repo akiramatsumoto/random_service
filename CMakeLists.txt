@@ -7,9 +7,29 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+
+# Generate service interfaces
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/Query.srv"
+)
+
+# Add the executable for random_generator.cpp
+add_executable(random_generator src/random_generator.cpp)
+ament_target_dependencies(random_generator
+  rclcpp
+)
+
+# Link the generated interfaces to the executable
+rosidl_target_interfaces(random_generator
+  ${PROJECT_NAME} "rosidl_typesupport_cpp"
+)
+
+# Install the executable
+install(TARGETS random_generator
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -24,3 +44,4 @@ if(BUILD_TESTING)
 endif()
 
 ament_package()
+
