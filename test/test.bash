@@ -22,6 +22,18 @@ ros2 service call /query random_service/srv/Query "num_digit: -1"
 [ $? = 1 ] || cleanup
 ros2 service call /query random_service/srv/Query "num_digit: -1"
 [ $? = 1 ] || cleanup
+response=$(ros2 service call /query random_service/srv/Query "num_digit: 1" | grep n_digit_number | sed 's/.*n_digit_number=\([0-9]*\).*/\1/')
+if [ "$response" -ge 0 ] && [ "$response" -le 9 ]; then
+    :
+else
+    cleanup
+fi
+response=$(ros2 service call /query random_service/srv/Query "num_digit: 2" | grep n_digit_number | sed 's/.*n_digit_number=\([0-9]*\).*/\1/')
+if [ "$response" -ge 10 ] && [ "$response" -le 99 ]; then
+    :
+else
+    cleanup
+fi
 kill $NODE_PID
 echo "テストは成功しました"
 exit 0
