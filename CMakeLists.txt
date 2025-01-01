@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2024 Akira Matsumoto <akiram8427@gmail.com>
+# SPDX-License-Identifier: BSD-3-Clause
 cmake_minimum_required(VERSION 3.8)
 project(random_service)
 
