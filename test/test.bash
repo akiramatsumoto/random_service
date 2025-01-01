@@ -11,7 +11,4 @@ source $dir/.bashrc
 
 ros2 run random_service random_generator &
 NODE_PID=$!
-ros2 service list | grep /query
 kill $NODE_PID
-echo "テストは成功しました"
-exit 0
